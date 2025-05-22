@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Side-by-Side Content - Combined Scroll</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            /* The body will get a scrollbar if the content-container is taller than the viewport */
+        }
+
+        .content-container {
+            display: flex; /* Enables flexbox layout for side-by-side columns */
+            width: 100%;
+            /* Height will be determined by the tallest column */
+        }
+
+        .content-column {
+            flex: 1; /* Each column will take up 50% of the width */
+            box-sizing: border-box;
+            padding: 5px; /* Optional: small padding */
+            /* Height will be determined by the content within (iframe or image) */
+        }
+
+        #left-column iframe {
+            width: 100%;
+            /*
+              Set a very large fixed height. This is the key.
+              If the Google Form content is shorter than this, there will be empty space below it
+              within the iframe's area. If the form is longer than this, the iframe MIGHT
+              still get a scrollbar. Adjust as needed for your specific form's length.
+              Using a very large pixel value is often more predictable than a vh unit here.
+            */
+            height: 4200px; /* Example: A large fixed height */
+            border: 2px solid #000000; /* Optional: to see iframe boundaries */
+            display: block; /* Ensures it behaves as a block-level element */
+        }
+
+        #right-column img {
+            width: 100%;  /* Image will fill the width of its column */
+            height: auto; /* Height will adjust to maintain aspect ratio */
+            border: 2px solid #000000; /* Optional: to see iframe boundaries */
+            display: block; /* Removes any extra space below the image */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content-container">
+        <div class="content-column" id="left-column">
+            <!-- The scrolling="no" attribute is deprecated but can sometimes help visually.
+                 The main work is done by the large height set in CSS. -->
+            <iframe
+                src="https://docs.google.com/forms/d/e/1FAIpQLScTcf_jVfdpkBTt5f0v31HhqCe6XQa27G4vWdnukRz_eM92dw/viewform?usp=sharing&ouid=105532609799885943366"
+                title="Responders View (Form View)"
+                scrolling="no">
+            </iframe>
+        </div>
+        <div class="content-column" id="right-column">
+            <img src="NecronHandle.png" alt="Responses Image">
+            <!-- Make sure 'responses.png' is in the same directory as this HTML file -->
+        </div>
+    </div>
+
+</body>
+</html>
